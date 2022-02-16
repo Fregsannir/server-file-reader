@@ -1,0 +1,138 @@
+[
+    {
+        "title": "Blockchain Awards",
+        "date": "14-15th of October",
+        "promo": [
+            {
+                "name": "bcawards_test10",
+                "sale": 100
+            },
+            {
+                "name": "forklog_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "cryptoa_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "coinfox_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "beincrypto_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "colibri_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "bitnovosti_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "newsbts_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "coindar_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "maff_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "forknews_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "c.consulting_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "bits.media_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "alchlcs_bawards15",
+                "sale": 15
+            },
+            {
+                "name": "bllife_bwrd20bl",
+                "sale": 20
+            },
+            {
+                "name": "terracrypto_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "coinspot_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "altcoinlog_bwrd10",
+                "sale": 10
+            },
+            {
+                "name": "tikhonov_bawards20",
+                "sale": 20
+            },
+            {
+                "name": "peterbel_bawards20",
+                "sale": 20
+            },
+            {
+                "name": "georgeg_bawards20",
+                "sale": 20
+            },
+            {
+                "name": "daovc_bwrd15",
+                "sale": 15
+            },
+            {
+                "name": "angelsdeck_bwrd15",
+                "sale": 15
+            }
+        ],
+        "tickets": [
+            {
+                "query": "bcawards-event",
+                "name": "BLOCKCHAIN AWARDS EVENT",
+                "price": 305,
+                "features": [
+                    "<li>The ticket gives access to the official part</li>",
+                    "<li>(Includes snacks, alcoholic and non-alcoholic drinks)</li>",
+                    "<li>Access to the after-party (included snacks and alcohol)</li>"
+                ],
+                "addresses": [
+                    "<li>SOHO ROOMS Savvinskaya Naberezhnaya, 12/8, Moscow, Russia, 119435</li>"
+                ],
+                "date": ["<li>27 October 2021, 20:00 (GMT+3)</li>"]
+            },
+            {
+                "query": "after-party-vip",
+                "name": "BLOCKCHAIN AWARDS AFTERPARTY VIP",
+                "price": 205,
+                "features": [
+                    "<li>Access to the after-party (included snacks and alcohol)</li>"
+                ],
+                "addresses": [
+                    "<li>SOHO ROOMS Savvinskaya Naberezhnaya, 12/8, Moscow, Russia, 119435</li>"
+                ],
+                "date": ["<li>27 October 2021, 23:00 (GMT+3)</li>"]
+            },
+            {
+                "query": "after-party",
+                "name": "BLOCKCHAIN AWARDS AFTERPARTY",
+                "price": 105,
+                "features": ["<li>Only access to the after-party</li>"],
+                "addresses": [
+                    "<li>SOHO ROOMS Savvinskaya Naberezhnaya, 12/8, Moscow, Russia, 119435</li>"
+                ],
+                "date": ["<li>27 October 2021, 23:00 (GMT+3)</li>"]
+            }
+        ]
+    }
+]

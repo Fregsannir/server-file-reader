@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "baseUrl": ".",
+    },
+    "include": ["index.ts", "src/*.ts"],
+    "exclude": ["dist", "node_modules"]
+}

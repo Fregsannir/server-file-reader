@@ -9,7 +9,7 @@ const app: Express = express();
 const router: Router = express.Router();
 dotenv.config();
 
-app.use(cors());
+app.use(cors(), express.json());
 
 router.get("/:organizerName", async (req: Request, res: Response) => {
     try {
@@ -35,7 +35,6 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
 router.get("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
-        console.log(hook);
         return res
             .status(HTTPStatus.SUCCESS)
             .json({ message: "OK", data: hook });

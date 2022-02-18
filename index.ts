@@ -32,7 +32,7 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
     }
 });
 
-router.get("/hook", async (req: Request, res: Response) => {
+router.get("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
         return res.status(HTTPStatus.SUCCESS).json({ data: hook });

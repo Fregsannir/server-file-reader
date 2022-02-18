@@ -32,7 +32,16 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
     }
 });
 
-app.use("/events", router);
+router.get("/hook", async (req: Request, res: Response) => {
+    try {
+        const hook = req.body;
+        return res.status(HTTPStatus.SUCCESS).json({ data: hook });
+    } catch (e) {
+        return res.status(e.status || HTTPStatus.INTERNAL).json({ message: e.message });
+    }
+})
+
+app.use(router);
 
 app.use("*", async (req: Request, res: Response) => {
     return res.status(HTTPStatus.BAD_REQUEST).json({ message: `Route ${req.originalUrl} with method ${req.method} Not Found` });

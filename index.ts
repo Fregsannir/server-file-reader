@@ -38,14 +38,20 @@ router.get("/hook", async (req: Request, res: Response) => {
         return res.status(HTTPStatus.SUCCESS).json({ data: hook });
     } catch (e) {
         console.error(e);
-        return res.status(e.status || HTTPStatus.INTERNAL).json({ message: e.message });
+        return res
+            .status(e.status || HTTPStatus.INTERNAL)
+            .json({ message: e.message });
     }
-})
+});
 
 app.use(router);
 
 app.use("*", async (req: Request, res: Response) => {
-    return res.status(HTTPStatus.BAD_REQUEST).json({ message: `Route ${req.originalUrl} with method ${req.method} Not Found` });
+    return res
+        .status(HTTPStatus.BAD_REQUEST)
+        .json({
+            message: `Route ${req.originalUrl} with method ${req.method} Not Found`,
+        });
 });
 
 app.listen(Number(process.env.SERVER_PORT), () =>

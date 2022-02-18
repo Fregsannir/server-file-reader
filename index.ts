@@ -35,7 +35,10 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
 router.get("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
-        return res.status(HTTPStatus.SUCCESS).json({ data: hook });
+        console.log(hook);
+        return res
+            .status(HTTPStatus.SUCCESS)
+            .json({ message: "OK", data: hook });
     } catch (e) {
         console.error(e);
         return res
@@ -47,11 +50,9 @@ router.get("/wert/hook", async (req: Request, res: Response) => {
 app.use(router);
 
 app.use("*", async (req: Request, res: Response) => {
-    return res
-        .status(HTTPStatus.BAD_REQUEST)
-        .json({
-            message: `Route ${req.originalUrl} with method ${req.method} Not Found`,
-        });
+    return res.status(HTTPStatus.BAD_REQUEST).json({
+        message: `Route ${req.originalUrl} with method ${req.method} Not Found`,
+    });
 });
 
 app.listen(Number(process.env.SERVER_PORT), () =>

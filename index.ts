@@ -37,6 +37,7 @@ router.get("/hook", async (req: Request, res: Response) => {
         const hook = req.body;
         return res.status(HTTPStatus.SUCCESS).json({ data: hook });
     } catch (e) {
+        console.error(e);
         return res.status(e.status || HTTPStatus.INTERNAL).json({ message: e.message });
     }
 })

@@ -43,7 +43,7 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
 
         return res
             .status(HTTPStatus.SUCCESS)
-            .json({ message: "OK", data: hook });
+            .json({ message: "OK" });
     } catch (e) {
         console.error(e);
         return res

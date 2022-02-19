@@ -8,3 +8,8 @@ export enum HTTPStatus {
     NOT_FOUND = 404,
     INTERNAL = 500,
 }
+
+export const WertErrorTypes: object = {
+    order_failed: "Order failed, please try again",
+    order_canceled: "Order canceled, please try again",
+};

@@ -2,7 +2,7 @@ import express = require("express");
 import { Request, Response, Express, Router } from "express";
 import cors = require("cors");
 import dotenv = require("dotenv");
-import { HTTPStatus } from "./src/types";
+import { HTTPStatus, WertErrorTypes } from "./src/types";
 import { appAssert, checkFileExistenceAndReturnContent } from "./src/utils";
 
 const app: Express = express();
@@ -35,6 +35,12 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
 router.post("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
+        appAssert(
+            !WertErrorTypes[hook.type],
+            WertErrorTypes[hook.type],
+            HTTPStatus.BAD_REQUEST
+        );
+
         return res
             .status(HTTPStatus.SUCCESS)
             .json({ message: "OK", data: hook });

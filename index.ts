@@ -51,12 +51,12 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
 
-        if (hook.type === "order_complete") {
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_MAIN_PROTOCOL}://${process.env.NEXT_PUBLIC_MAIN_HOST}/landing/order-update`,
-                {
-                    cacheManager,
-                }
+        if (hook) {
+            cacheMiddleware.cache.store.set(
+                hook.click_id,
+                hook.type,
+                { ttl: 0 },
+                0
             );
         }
 
@@ -75,29 +75,45 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
     }
 });
 
-router.post("/wert/order-cache", async (req: Request, res: Response) => {
+router.post("/wert/order-check", async (req: Request, res: Response) => {
     try {
+        const { buyer, orderCode } = req.body;
         appAssert(
-            req.body.buyer && req.body.orders,
-            "Parameters `buyer` and `orders` are required",
+            buyer && orderCode,
+            "Parameters `buyer` and `orderCode` are not required",
             HTTPStatus.BAD_REQUEST
         );
 
-        await cacheMiddleware.cache.store.set(
-            `${req.body.buyer}_orders`,
-            req.body.price,
-            { ttl: 0 },
-            0
-        );
-        console.log(
-            await cacheMiddleware.cache.store.get(`${req.body.buyer}_orders`)
+        const orderResponse = await axios.post(
+            `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/order-update`,
+            {
+                orderCode: orderCode,
+                buyer: buyer,
+                status: cacheMiddleware.cache.store.get(orderCode),
+            }
         );
 
-        return res.status(HTTPStatus.CREATED).json({ message: "OK" });
+        if (orderResponse.data.success) {
+            await axios.post(
+                `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/ticket/send`,
+                {
+                    buyer: "buyer",
+                    orderCode: orderCode,
+                }
+            );
+        }
+
+        appAssert(
+            orderResponse.data.success,
+            orderResponse.data.message,
+            HTTPStatus.INTERNAL
+        );
+
+        return res.status(HTTPStatus.SUCCESS).json({ message: "OK" });
     } catch (e) {
         console.error(e);
         return res
-            .status(e.status || HTTPStatus.BAD_REQUEST)
+            .status(e.status || HTTPStatus.INTERNAL)
             .json({ message: e.message });
     }
 });

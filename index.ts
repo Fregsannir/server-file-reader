@@ -20,9 +20,11 @@ const cacheMiddleware = new ExpressCache(
 dotenv.config();
 
 app.use(
-    cors({
-        origin: "https://test-wowsummit.flashback.one",
-    }),
+    cors(
+        //{
+        //    origin: "https://test-wowsummit.flashback.one",
+        //}
+    ),
     express.json()
 );
 
@@ -52,13 +54,15 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
         const hook = req.body;
 
         if (hook) {
-            cacheMiddleware.cache.store.set(
+            await cacheMiddleware.cache.store.set(
                 hook.click_id,
                 hook.type,
                 { ttl: 0 },
                 0
             );
         }
+
+	console.log(await cacheMiddleware.cache.store.get(hook.click_id));
 
         appAssert(
             !WertErrorTypes[hook.type],
@@ -80,41 +84,54 @@ router.post("/wert/order-check", async (req: Request, res: Response) => {
         const { buyer, orderCode } = req.body;
         appAssert(
             buyer && orderCode,
-            "Parameters `buyer` and `orderCode` are not required",
+            "Parameters `buyer` and `orderCode` not required",
             HTTPStatus.BAD_REQUEST
         );
 
+	console.log(await cacheMiddleware.cache.store.get(orderCode));
+
         const orderResponse = await axios.post(
-            `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/order-update`,
+            `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/order-update`,
             {
                 orderCode: orderCode,
                 buyer: buyer,
-                status: cacheMiddleware.cache.store.get(orderCode),
+                status: "order_complete",
             }
         );
 
-        if (orderResponse.data.success) {
+	if (!!orderResponse.data.success && orderResponse.data.service !== "free" && !orderResponse.data.sent) {
+	    await axios.post(
+		`${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
+		{
+		    orderCode: orderCode,
+		},
+	    );
+	}
+
+        if (!!orderResponse.data.success && orderResponse.data.service === "free" && !orderResponse.data.sent) {
             await axios.post(
-                `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/ticket/send`,
+                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
                 {
-                    buyer: "buyer",
-                    orderCode: orderCode,
+                    buyer: buyer,
+		    service: orderResponse.data.service,
                 }
             );
         }
 
+	console.log(orderResponse.data);
+
         appAssert(
             orderResponse.data.success,
-            orderResponse.data.message,
+            "Order failed, please try again later",
             HTTPStatus.INTERNAL
         );
 
-        return res.status(HTTPStatus.SUCCESS).json({ message: "OK" });
+        return res.status(HTTPStatus.SUCCESS).json({ message: "OK", success: true });
     } catch (e) {
         console.error(e);
         return res
             .status(e.status || HTTPStatus.INTERNAL)
-            .json({ message: e.message });
+            .json({ message: e.message, success: false });
     }
 });
 

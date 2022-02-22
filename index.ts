@@ -52,6 +52,7 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
 router.post("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
+	console.log(hook);
 
         if (hook) {
             await cacheMiddleware.cache.store.set(
@@ -62,7 +63,7 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
             );
         }
 
-	console.log(await cacheMiddleware.cache.store.get(hook.click_id));
+	console.log(hook.click_id, await cacheMiddleware.cache.store.get(hook.click_id));
 
         appAssert(
             !WertErrorTypes[hook.type],
@@ -84,7 +85,7 @@ router.post("/wert/order-check", async (req: Request, res: Response) => {
         const { buyer, orderCode } = req.body;
         appAssert(
             buyer && orderCode,
-            "Parameters `buyer` and `orderCode` not required",
+            "Parameters `buyer` and `orderCode` are required",
             HTTPStatus.BAD_REQUEST
         );
 
@@ -95,7 +96,7 @@ router.post("/wert/order-check", async (req: Request, res: Response) => {
             {
                 orderCode: orderCode,
                 buyer: buyer,
-                status: "order_complete",
+                status: await cacheMiddleware.cache.store.get(orderCode),
             }
         );
 

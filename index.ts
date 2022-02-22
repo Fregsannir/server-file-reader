@@ -3,28 +3,22 @@ import { Request, Response, Express, Router } from "express";
 import dotenv = require("dotenv");
 import { HTTPStatus, WertErrorTypes } from "./src/types";
 import { appAssert, checkFileExistenceAndReturnContent } from "./src/utils";
+import { Cron } from "./src/cron/index";
 import axios from "axios";
-const ExpressCache = require("express-cache-middleware");
-const cacheManager = require("cache-manager");
+import { cacheMiddleware } from "./src/cache/index";
+
 const cors = require("cors");
 
 const app: Express = express();
 const router: Router = express.Router();
-const cacheMiddleware = new ExpressCache(
-    cacheManager.caching({
-        store: "memory",
-        max: 100000,
-        ttl: 0,
-    })
-);
+
 dotenv.config();
 
 app.use(
-    cors(
-        //{
-        //    origin: "https://test-wowsummit.flashback.one",
-        //}
-    ),
+    cors(),
+    //{
+    //    origin: "https://test-wowsummit.flashback.one",
+    //}
     express.json()
 );
 
@@ -52,7 +46,7 @@ router.get("/:organizerName", async (req: Request, res: Response) => {
 router.post("/wert/hook", async (req: Request, res: Response) => {
     try {
         const hook = req.body;
-	console.log(hook);
+        console.log(hook);
 
         if (hook) {
             await cacheMiddleware.cache.store.set(
@@ -63,7 +57,10 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
             );
         }
 
-	console.log(hook.click_id, await cacheMiddleware.cache.store.get(hook.click_id));
+        console.log(
+            hook.click_id,
+            await cacheMiddleware.cache.store.get(hook.click_id)
+        );
 
         appAssert(
             !WertErrorTypes[hook.type],
@@ -89,7 +86,7 @@ router.post("/wert/order-check", async (req: Request, res: Response) => {
             HTTPStatus.BAD_REQUEST
         );
 
-	console.log(await cacheMiddleware.cache.store.get(orderCode));
+        console.log(await cacheMiddleware.cache.store.get(orderCode));
 
         const orderResponse = await axios.post(
             `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/order-update`,
@@ -100,26 +97,34 @@ router.post("/wert/order-check", async (req: Request, res: Response) => {
             }
         );
 
-	if (!!orderResponse.data.success && orderResponse.data.service !== "free" && !orderResponse.data.sent) {
-	    await axios.post(
-		`${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
-		{
-		    orderCode: orderCode,
-		},
-	    );
-	}
-
-        if (!!orderResponse.data.success && orderResponse.data.service === "free" && !orderResponse.data.sent) {
+        if (
+            !!orderResponse.data.success &&
+            orderResponse.data.service !== "free" &&
+            !orderResponse.data.sent
+        ) {
             await axios.post(
                 `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
                 {
-                    buyer: buyer,
-		    service: orderResponse.data.service,
+                    orderCode: orderCode,
                 }
             );
         }
 
-	console.log(orderResponse.data);
+        if (
+            !!orderResponse.data.success &&
+            orderResponse.data.service === "free" &&
+            !orderResponse.data.sent
+        ) {
+            await axios.post(
+                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
+                {
+                    buyer: buyer,
+                    service: orderResponse.data.service,
+                }
+            );
+        }
+
+        console.log(orderResponse.data);
 
         appAssert(
             orderResponse.data.success,
@@ -127,7 +132,9 @@ router.post("/wert/order-check", async (req: Request, res: Response) => {
             HTTPStatus.INTERNAL
         );
 
-        return res.status(HTTPStatus.SUCCESS).json({ message: "OK", success: true });
+        return res
+            .status(HTTPStatus.SUCCESS)
+            .json({ message: "OK", success: true });
     } catch (e) {
         console.error(e);
         return res
@@ -150,3 +157,5 @@ app.listen(Number(process.env.SERVER_PORT), () =>
         `Server is running on ${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`
     )
 );
+
+new Cron();

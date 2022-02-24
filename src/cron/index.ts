@@ -1,6 +1,5 @@
 import axios from "axios";
 import { CronJob } from "cron";
-import { appAssert } from "src/utils";
 import { cacheMiddleware } from "../cache/index";
 
 export class Cron {

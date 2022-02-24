@@ -1,10 +1,9 @@
 import express = require("express");
 import { Request, Response, Express, Router } from "express";
 import dotenv = require("dotenv");
-import { HTTPStatus, WertErrorTypes } from "./src/types";
+import { HTTPStatus } from "./src/types";
 import { appAssert, checkFileExistenceAndReturnContent } from "./src/utils";
 import { Cron } from "./src/cron/index";
-import axios from "axios";
 import { cacheMiddleware } from "./src/cache/index";
 
 const cors = require("cors");

@@ -3,10 +3,10 @@ import { Request, Response, Express, Router } from "express";
 import dotenv = require("dotenv");
 import { HTTPStatus } from "./src/types";
 import { appAssert, checkFileExistenceAndReturnContent } from "./src/utils";
-import { Cron } from "./src/cron/index";
+import { schedule } from "./src/cron/index";
 import { cacheMiddleware } from "./src/cache/index";
 
-const cors = require("cors");
+import cors from "cors";
 
 const app: Express = express();
 const router: Router = express.Router();
@@ -73,10 +73,10 @@ app.use("*", async (req: Request, res: Response) => {
     });
 });
 
-new Cron();
-
 app.listen(Number(process.env.SERVER_PORT), () =>
     console.info(
         `Server is running on ${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`
     )
 );
+
+schedule.start();

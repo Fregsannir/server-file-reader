@@ -1,53 +1,40 @@
 import axios from "axios";
-import { CronJob } from "cron";
 import { cacheMiddleware } from "../cache/index";
 
-export class Cron {
-    cron: CronJob;
+import cron = require("node-cron");
 
-    constructor() {
-        this.cron = new CronJob("*/2 * * * * *", async () => {
-            try {
-                const cacheKeys: string[] =
-                    await cacheMiddleware.cache.store.keys();
-                console.log(`Cache Keys length is ${cacheKeys.length}`);
-                
-                if (cacheKeys.length) {
-                    cacheKeys.map(async (cacheKey: string) => {
-                        const status = await cacheMiddleware.cache.store.get(
-                            cacheKey
-                        );
+export const schedule = cron.schedule("*/2 * * * * *", async () => {
+    try {
+        const cacheKeys: string[] = await cacheMiddleware.cache.store.keys();
+        console.log(`Cache Keys length is ${cacheKeys.length}`);
 
-                        const response = (
-                            await axios.post(
-                                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/status`,
-                                {
-                                    orderCode: cacheKey,
-                                    status: await cacheMiddleware.cache.store.get(
-                                        cacheKey
-                                    ),
-                                }
-                            )
-                        ).data;
+        if (cacheKeys.length) {
+            cacheKeys.map(async (cacheKey: string) => {
+                const status = await cacheMiddleware.cache.store.get(cacheKey);
 
-                        if (response.orderCode && status === "order_complete") {
-                            await axios.post(
-                                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
-                                {
-                                    orderCode: cacheKey,
-                                }
-                            );
+                const response = (
+                    await axios.post(
+                        `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/status`,
+                        {
+                            orderCode: cacheKey,
+                            status: await cacheMiddleware.cache.store.get(
+                                cacheKey
+                            ),
                         }
-                    });
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        });
+                    )
+                ).data;
 
-        if (!this.cron.running) {
-            this.cron.start();
+                if (response.orderCode && status === "order_complete") {
+                    await axios.post(
+                        `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
+                        {
+                            orderCode: cacheKey,
+                        }
+                    );
+                }
+            });
         }
-        console.info("CronJob was initialized in constructor...");
+    } catch (e) {
+        console.error(e);
     }
-}
+});

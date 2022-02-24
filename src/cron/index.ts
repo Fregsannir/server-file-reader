@@ -12,19 +12,15 @@ export const schedule = cron.schedule("*/2 * * * * *", async () => {
             cacheKeys.map(async (cacheKey: string) => {
                 const status = await cacheMiddleware.cache.store.get(cacheKey);
 
-                const response = (
-                    await axios.post(
-                        `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/status`,
-                        {
-                            orderCode: cacheKey,
-                            status: await cacheMiddleware.cache.store.get(
-                                cacheKey
-                            ),
-                        }
-                    )
-                ).data;
+                const response = await axios.post(
+                    `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/status`,
+                    {
+                        orderCode: cacheKey,
+                        status: await cacheMiddleware.cache.store.get(cacheKey),
+                    }
+                );
 
-                if (response.orderCode && status === "order_complete") {
+                if (response.data.orderCode && status === "order_complete") {
                     await axios.post(
                         `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
                         {

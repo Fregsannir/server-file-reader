@@ -14,10 +14,9 @@ const router: Router = express.Router();
 dotenv.config();
 
 app.use(
-    cors(),
-    //{
-    //    origin: "https://test-wowsummit.flashback.one",
-    //}
+    cors({
+        origin: `${process.env.CORS_PROTOCOL}://${process.env.CORS_HOST}`,
+    }),
     express.json()
 );
 

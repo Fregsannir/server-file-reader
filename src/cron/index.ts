@@ -39,8 +39,9 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
                                         },
                                     }
                                 )
-                                .then((res) => {
+                                .then(async (res) => {
                                     console.log(res);
+                                    await cacheMiddleware.cache.store.del(cacheKey);
                                 })
                                 .catch((e) => console.error(e));
                         }, i * 10000);

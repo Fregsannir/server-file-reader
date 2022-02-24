@@ -8,7 +8,7 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
     console.log(`Cache Keys length is ${cacheKeys.length}`);
 
     if (cacheKeys.length) {
-        cacheKeys.map(async (cacheKey: string) => {
+        cacheKeys.map(async (cacheKey: string, i: number) => {
             const status = await cacheMiddleware.cache.store.get(cacheKey);
 
             axios
@@ -43,7 +43,7 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
                                     console.log(res);
                                 })
                                 .catch((e) => console.error(e));
-                        }, 10000);
+                        }, i * 10000);
                     }
                 })
                 .catch((e) => console.error(e));

@@ -20,7 +20,7 @@ export class Cron {
 
                         const response = (
                             await axios.post(
-                                `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/status`,
+                                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/status`,
                                 {
                                     orderCode: cacheKey,
                                     status: await cacheMiddleware.cache.store.get(
@@ -32,7 +32,7 @@ export class Cron {
 
                         if (response.orderCode && status === "order_complete") {
                             await axios.post(
-                                `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/ticket/send`,
+                                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
                                 {
                                     orderCode: cacheKey,
                                 }

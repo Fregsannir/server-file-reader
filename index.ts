@@ -73,10 +73,10 @@ app.use("*", async (req: Request, res: Response) => {
     });
 });
 
+new Cron();
+
 app.listen(Number(process.env.SERVER_PORT), () =>
     console.info(
         `Server is running on ${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`
     )
 );
-
-new Cron();

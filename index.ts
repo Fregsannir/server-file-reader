@@ -57,89 +57,12 @@ router.post("/wert/hook", async (req: Request, res: Response) => {
             );
         }
 
-        console.log(
-            hook.click_id,
-            await cacheMiddleware.cache.store.get(hook.click_id)
-        );
-
-        appAssert(
-            !WertErrorTypes[hook.type],
-            WertErrorTypes[hook.type],
-            HTTPStatus.BAD_REQUEST
-        );
-
         return res.status(HTTPStatus.SUCCESS).json({ message: "OK" });
     } catch (e) {
         console.error(e);
         return res
             .status(e.status || HTTPStatus.INTERNAL)
             .json({ message: e.message });
-    }
-});
-
-router.post("/wert/order-check", async (req: Request, res: Response) => {
-    try {
-        const { buyer, orderCode } = req.body;
-        appAssert(
-            buyer && orderCode,
-            "Parameters `buyer` and `orderCode` are required",
-            HTTPStatus.BAD_REQUEST
-        );
-
-        console.log(await cacheMiddleware.cache.store.get(orderCode));
-
-        const orderResponse = await axios.post(
-            `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/order-update`,
-            {
-                orderCode: orderCode,
-                buyer: buyer,
-                status: await cacheMiddleware.cache.store.get(orderCode),
-            }
-        );
-
-        if (
-            !!orderResponse.data.success &&
-            orderResponse.data.service !== "free" &&
-            !orderResponse.data.sent
-        ) {
-            await axios.post(
-                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
-                {
-                    orderCode: orderCode,
-                }
-            );
-        }
-
-        if (
-            !!orderResponse.data.success &&
-            orderResponse.data.service === "free" &&
-            !orderResponse.data.sent
-        ) {
-            await axios.post(
-                `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
-                {
-                    buyer: buyer,
-                    service: orderResponse.data.service,
-                }
-            );
-        }
-
-        console.log(orderResponse.data);
-
-        appAssert(
-            orderResponse.data.success,
-            "Order failed, please try again later",
-            HTTPStatus.INTERNAL
-        );
-
-        return res
-            .status(HTTPStatus.SUCCESS)
-            .json({ message: "OK", success: true });
-    } catch (e) {
-        console.error(e);
-        return res
-            .status(e.status || HTTPStatus.INTERNAL)
-            .json({ message: e.message, success: false });
     }
 });
 

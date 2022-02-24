@@ -11,12 +11,16 @@ export class Cron {
             try {
                 const cacheKeys: string[] =
                     await cacheMiddleware.cache.store.keys();
-                    console.log(`Cache Keys length is ${cacheKeys.length}`);
+                console.log(`Cache Keys length is ${cacheKeys.length}`);
                 cacheKeys.length
                     ? cacheKeys.map(async (cacheKey: string) => {
+                          const status = await cacheMiddleware.cache.store.get(
+                              cacheKey
+                          );
+
                           const response = (
                               await axios.post(
-                                  `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/orders`,
+                                  `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/status`,
                                   {
                                       orderCode: cacheKey,
                                       status: await cacheMiddleware.cache.store.get(
@@ -26,7 +30,7 @@ export class Cron {
                               )
                           ).data;
 
-                          if (response.orderCode) {
+                          if (response.orderCode && status === "order_complete") {
                               await axios.post(
                                   `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOST}/landing/ticket/send`,
                                   {

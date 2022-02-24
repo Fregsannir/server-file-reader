@@ -17,6 +17,11 @@ export const schedule = cron.schedule("*/2 * * * * *", async () => {
                     {
                         orderCode: cacheKey,
                         status: await cacheMiddleware.cache.store.get(cacheKey),
+                    },
+                    {
+                        headers: {
+                            Origin: "https://landing-api.flashback.one",
+                        },
                     }
                 );
 
@@ -25,6 +30,11 @@ export const schedule = cron.schedule("*/2 * * * * *", async () => {
                         `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
                         {
                             orderCode: cacheKey,
+                        },
+                        {
+                            headers: {
+                                Origin: "https://landing-api.flashback.one",
+                            },
                         }
                     );
                 }

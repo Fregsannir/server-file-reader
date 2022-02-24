@@ -9,10 +9,10 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
 
     if (cacheKeys.length) {
         cacheKeys.map(async (cacheKey: string, i: number) => {
-            const status = await cacheMiddleware.cache.store.get(cacheKey);
+                const status = await cacheMiddleware.cache.store.get(cacheKey);
+                console.log(status);
 
-            axios
-                .post(
+                const response = await axios.post(
                     `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/status`,
                     {
                         orderCode: cacheKey,
@@ -23,31 +23,23 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
                             Origin: "https://landing-api.flashback.one",
                         },
                     }
-                )
-                .then((res) => {
-                    if (res.data?.orderCode && status === "order_complete") {
-                        setTimeout(() => {
-                            axios
-                                .post(
-                                    `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
-                                    {
-                                        orderCode: cacheKey,
-                                    },
-                                    {
-                                        headers: {
-                                            Origin: "https://landing-api.flashback.one",
-                                        },
-                                    }
-                                )
-                                .then(async (res) => {
-                                    console.log(res);
-                                    await cacheMiddleware.cache.store.del(cacheKey);
-                                })
-                                .catch((e) => console.error(e));
-                        }, i * 10000);
-                    }
-                })
-                .catch((e) => console.error(e));
+                );
+    
+                if (response.data?.orderCode && status === "order_complete") {
+                        await cacheMiddleware.cache.store.del(cacheKey);
+    
+                        await axios.post(
+                            `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
+                            {
+                                orderCode: cacheKey,
+                            },
+                            {
+                                headers: {
+                                    Origin: "https://landing-api.flashback.one",
+                                },
+                            }
+                        );
+                }
         });
     }
 });

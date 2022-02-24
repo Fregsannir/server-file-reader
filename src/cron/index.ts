@@ -3,7 +3,7 @@ import { cacheMiddleware } from "../cache/index";
 
 import cron = require("node-cron");
 
-export const schedule = cron.schedule("*/2 * * * * *", async () => {
+export const schedule = cron.schedule("* */1 * * * *", async () => {
     const cacheKeys: string[] = await cacheMiddleware.cache.store.keys();
     console.log(`Cache Keys length is ${cacheKeys.length}`);
 

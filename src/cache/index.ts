@@ -1,5 +1,5 @@
+import cacheManager from "cache-manager";
 const ExpressCache = require("express-cache-middleware");
-const cacheManager = require("cache-manager");
 
 export const cacheMiddleware = new ExpressCache(
     cacheManager.caching({

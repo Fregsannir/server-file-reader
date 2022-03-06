@@ -1,19 +1,21 @@
-import USDT_MAIN from "../abi/USDT-main.json";
-import USDC_MAIN from "../abi/USDC-main.json";
-import BUSD_MAIN from "../abi/BUSD-main.json";
-import USDT_ROPSTEN from "../abi/USDT-ropsten.json";
-import USDC_ROPSTEN from "../abi/USDC-ropsten.json";
-import BUSD_ROPSTEN from "../abi/BUSD-ropsten.json";
-import USDT_BSC from "../abi/USDT-bsc.json";
-import USDC_BSC from "../abi/USDC-bsc.json";
-import BUSD_BSC from "../abi/BUSD-bsc.json";
-import USDT_BSCTEST from "../abi/USDT-bsctest.json";
-import BUSD_BSCTEST from "../abi/BUSD-bsctest.json";
-import USDT_POLYGON from "../abi/USDT-polygon.json";
-import USDC_POLYGON from "../abi/USDC-polygon.json";
-import BUSD_POLYGON from "../abi/BUSD-polygon.json";
-import USDT_MUMBAI from "../abi/USDT-mumbai.json";
-import USDC_MUMBAI from "../abi/USDC-mumbai.json";
+import { checkFileExistenceAndReturnContent } from "../utils";
+
+const USDT_MAIN = "abi/USDT-main" as const;
+const USDC_MAIN = "abi/USDC-main" as const;
+const BUSD_MAIN = "abi/BUSD-main" as const;
+const USDT_ROPSTEN = "abi/USDT-ropsten" as const;
+const USDC_ROPSTEN = "abi/USDC-ropsten" as const;
+const BUSD_ROPSTEN = "abi/BUSD-ropsten" as const;
+const USDT_BSC = "abi/USDT-bsc" as const;
+const USDC_BSC = "abi/USDC-bsc" as const;
+const BUSD_BSC = "abi/BUSD-bsc" as const;
+const USDT_BSCTEST = "abi/USDT-bsctest" as const;
+const BUSD_BSCTEST = "abi/BUSD-bsctest" as const;
+const USDT_POLYGON = "abi/USDT-polygon" as const;
+const USDC_POLYGON = "abi/USDC-polygon" as const;
+const BUSD_POLYGON = "abi/BUSD-polygon" as const;
+const USDT_MUMBAI = "abi/USDT-mumbai" as const;
+const USDC_MUMBAI = "abi/USDC-mumbai" as const;
 
 export const rpcNetworks = {
     1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161", // Ethereum Mainnet
@@ -24,81 +26,133 @@ export const rpcNetworks = {
     80001: "https://rpc-mumbai.maticvigil.com", // Polygon Mumbai Testnet
 };
 
-export const tokens = {
+export const tokens = async () => ({
     1: {
         USDT: {
             contractAddress: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-            abi: USDT_MAIN,
+            abi: JSON.parse(
+                (await checkFileExistenceAndReturnContent(USDT_MAIN)).toString()
+            ),
         },
         USDC: {
             contractAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            abi: USDC_MAIN,
+            abi: JSON.parse(
+                (await checkFileExistenceAndReturnContent(USDC_MAIN)).toString()
+            ),
         },
         BUSD: {
             contractAddress: "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
-            abi: BUSD_MAIN,
+            abi: JSON.parse(
+                (await checkFileExistenceAndReturnContent(BUSD_MAIN)).toString()
+            ),
         },
     },
     3: {
         USDT: {
             contractAddress: "0x6EE856Ae55B6E1A249f04cd3b947141bc146273c",
-            abi: USDT_ROPSTEN,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDT_ROPSTEN)
+                ).toString()
+            ),
         },
         USDC: {
             contractAddress: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
-            abi: USDC_ROPSTEN,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDC_ROPSTEN)
+                ).toString()
+            ),
         },
         BUSD: {
             contractAddress: "0x16c550a97Ad2ae12C0C8CF1CC3f8DB4e0c45238f",
-            abi: BUSD_ROPSTEN,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(BUSD_ROPSTEN)
+                ).toString()
+            ),
         },
     },
     56: {
         USDT: {
             contractAddress: "0x55d398326f99059fF775485246999027B3197955",
-            abi: USDT_BSC,
+            abi: JSON.parse(
+                (await checkFileExistenceAndReturnContent(USDT_BSC)).toString()
+            ),
         },
         USDC: {
             contractAddress: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-            abi: USDC_BSC,
+            abi: JSON.parse(
+                (await checkFileExistenceAndReturnContent(USDC_BSC)).toString()
+            ),
         },
         BUSD: {
             contractAddress: "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-            abi: BUSD_BSC,
+            abi: JSON.parse(
+                (await checkFileExistenceAndReturnContent(BUSD_BSC)).toString()
+            ),
         },
     },
     97: {
         USDT: {
             contractAddress: "0x33abF1498d52E521DcAE88f236DE5EFc720cF969",
-            abi: USDT_BSCTEST,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDT_BSCTEST)
+                ).toString()
+            ),
         },
         BUSD: {
             contractAddress: "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
-            abi: BUSD_BSCTEST,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(BUSD_BSCTEST)
+                ).toString()
+            ),
         },
     },
     137: {
         USDT: {
             contractAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-            abi: USDT_POLYGON,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDT_POLYGON)
+                ).toString()
+            ),
         },
         USDC: {
             contractAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-            abi: USDC_POLYGON,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDC_POLYGON)
+                ).toString()
+            ),
         },
         BUSD: {
             contractAddress: "0xdAb529f40E671A1D4bF91361c21bf9f0C9712ab7",
-            abi: BUSD_POLYGON,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(BUSD_POLYGON)
+                ).toString()
+            ),
         },
     },
     80001: {
         USDT: {
             contractAddress: "0xA02f6adc7926efeBBd59Fd43A84f4E0c0c91e832",
-            abi: USDT_MUMBAI,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDT_MUMBAI)
+                ).toString()
+            ),
         },
         USDC: {
             contractAddress: "0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747",
-            abi: USDC_MUMBAI,
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDC_MUMBAI)
+                ).toString()
+            ),
         },
     },
-};
+});

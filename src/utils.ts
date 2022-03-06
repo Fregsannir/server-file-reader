@@ -22,9 +22,18 @@ export function appAssert(
 
 export async function checkFileExistenceAndReturnContent(filename: string) {
     try {
-        const events = await fs.readFile(`./src/${filename.toLowerCase()}.json`);
+        const events = await fs.readFile(
+            `./src/${filename.toLowerCase()}.json`
+        );
         return events;
     } catch (e) {
-        throw new ApplicationError(HTTPStatus.NOT_FOUND, "File with current name not found");
+        throw new ApplicationError(
+            HTTPStatus.NOT_FOUND,
+            "File with current name not found"
+        );
     }
+}
+
+export function checkRegexPattern(string: string, regex: RegExp) {
+    return string.search(regex) !== -1 ? true : false;
 }

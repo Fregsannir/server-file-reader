@@ -28,8 +28,6 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
                 );
 
                 if (response.data?.orderCode && status === "order_complete") {
-                    await cacheMiddleware.cache.store.del(cacheKey);
-
                     await axios.post(
                         `${process.env.MAIN_SERVER_PROTOCOL}://${process.env.MAIN_SERVER_HOST}/landing/ticket/send`,
                         {
@@ -41,11 +39,13 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
                             },
                         }
                     );
+
+                    await cacheMiddleware.cache.store.del(cacheKey);
                 }
             });
         }
     } catch (e) {
-        console.error(e);
+        console.error(`\n--- \nStatus: ${e.response.status} \nStatus Text: ${e.response.statusText} \nMessage: ${e.response.data?.message} ---\n`);
     }
 });
 
@@ -102,6 +102,6 @@ export const cryptoShedule = cron.schedule("* */2 * * * *", async () => {
             });
         }
     } catch (e) {
-        console.error(e);
+        console.error(`\n--- \nStatus: ${e.response.status} \nStatus Text: ${e.response.statusText} \nMessage: ${e.response.data?.message} ---\n`);
     }
 });

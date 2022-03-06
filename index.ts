@@ -1,6 +1,6 @@
-import express = require("express");
+import express from "express";
 import { Request, Response, Express, Router } from "express";
-import dotenv = require("dotenv");
+import * as dotenv from "dotenv";
 import { HTTPStatus } from "./src/types";
 import {
     appAssert,
@@ -78,9 +78,9 @@ router.get("/currency/token/:chainId?", async (req: Request, res: Response) => {
                 HTTPStatus.BAD_REQUEST
             );
 
-            return res
-                .status(HTTPStatus.SUCCESS)
-                .json({ tokens: tokens[Number(req.params.chainId)] || null });
+            return res.status(HTTPStatus.SUCCESS).json({
+                tokens: (await tokens())[Number(req.params.chainId)] || null,
+            });
         }
 
         return res.status(HTTPStatus.SUCCESS).json({ tokens: tokens });

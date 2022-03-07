@@ -83,7 +83,7 @@ router.get("/currency/token/:chainId?", async (req: Request, res: Response) => {
             });
         }
 
-        return res.status(HTTPStatus.SUCCESS).json({ tokens: tokens });
+        return res.status(HTTPStatus.SUCCESS).json({ tokens: await tokens() });
     } catch (e) {
         console.error(e);
         return res

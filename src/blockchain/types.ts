@@ -28,6 +28,7 @@ export const rpcNetworks = {
 
 export const tokens = async () => ({
     1: {
+        name: "Ethereum Mainnet",
         USDT: {
             contractAddress: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
             abi: JSON.parse(
@@ -48,6 +49,7 @@ export const tokens = async () => ({
         },
     },
     3: {
+        name: "Ropsten",
         USDT: {
             contractAddress: "0x6EE856Ae55B6E1A249f04cd3b947141bc146273c",
             abi: JSON.parse(
@@ -74,6 +76,7 @@ export const tokens = async () => ({
         },
     },
     56: {
+        name: "Binance Smart Chain Mainnet",
         USDT: {
             contractAddress: "0x55d398326f99059fF775485246999027B3197955",
             abi: JSON.parse(
@@ -94,6 +97,7 @@ export const tokens = async () => ({
         },
     },
     97: {
+        name: "Binance Smart Chain Testnet",
         USDT: {
             contractAddress: "0x33abF1498d52E521DcAE88f236DE5EFc720cF969",
             abi: JSON.parse(
@@ -112,6 +116,7 @@ export const tokens = async () => ({
         },
     },
     137: {
+        name: "Polygon Mainnet",
         USDT: {
             contractAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
             abi: JSON.parse(
@@ -138,6 +143,7 @@ export const tokens = async () => ({
         },
     },
     80001: {
+        name: "Polygon Mumbai",
         USDT: {
             contractAddress: "0xA02f6adc7926efeBBd59Fd43A84f4E0c0c91e832",
             abi: JSON.parse(

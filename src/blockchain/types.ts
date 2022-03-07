@@ -144,13 +144,5 @@ export const tokens = async () => ({
                 ).toString()
             ),
         },
-        USDC: {
-            contractAddress: "0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747",
-            abi: JSON.parse(
-                (
-                    await checkFileExistenceAndReturnContent(USDC_MUMBAI)
-                ).toString()
-            ),
-        },
     },
 });

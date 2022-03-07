@@ -10,7 +10,7 @@ export const schedule = cron.schedule("* */2 * * * *", async () => {
         console.log(`Cache Keys length is ${cacheKeys.length}`);
 
         if (cacheKeys.length) {
-            cacheKeys.map(async (cacheKey: string, i: number) => {
+            cacheKeys.map(async (cacheKey: string) => {
                 const status = await cacheMiddleware.cache.store.get(cacheKey);
                 console.log(status);
 
@@ -61,7 +61,7 @@ export const cryptoShedule = cron.schedule("* */2 * * * *", async () => {
         );
 
         if (response.data.orders) {
-            response.data.orders.map(async (order: any, i: number) => {
+            response.data.orders.map(async (order: any) => {
                 const { web3 } = new Web3Provider(Number(order.chainId));
                 let statusResponse: any;
 

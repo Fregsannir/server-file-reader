@@ -23,7 +23,7 @@ export function appAssert(
 export async function checkFileExistenceAndReturnContent(filename: string) {
     try {
         const events = await fs.readFile(
-            `./src/${filename.toLowerCase()}.json`
+            `./src/${filename}.json`
         );
         return events;
     } catch (e) {

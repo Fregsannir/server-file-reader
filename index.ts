@@ -25,7 +25,7 @@ app.use(
     express.json()
 );
 
-router.get("/:organizerName", async (req: Request, res: Response) => {
+router.get("/partner/:organizerName", async (req: Request, res: Response) => {
     try {
         appAssert(
             req.params.organizerName,

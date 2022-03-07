@@ -36,13 +36,13 @@ export const tokens = async () => ({
             ),
         },
         USDC: {
-            contractAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            contractAddress: "0x0882477e7895bdC5cea7cB1552ed914aB157Fe56",
             abi: JSON.parse(
                 (await checkFileExistenceAndReturnContent(USDC_MAIN)).toString()
             ),
         },
         BUSD: {
-            contractAddress: "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+            contractAddress: "0x5864c777697Bf9881220328BF2f16908c9aFCD7e",
             abi: JSON.parse(
                 (await checkFileExistenceAndReturnContent(BUSD_MAIN)).toString()
             ),
@@ -55,14 +55,6 @@ export const tokens = async () => ({
             abi: JSON.parse(
                 (
                     await checkFileExistenceAndReturnContent(USDT_ROPSTEN)
-                ).toString()
-            ),
-        },
-        USDC: {
-            contractAddress: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
-            abi: JSON.parse(
-                (
-                    await checkFileExistenceAndReturnContent(USDC_ROPSTEN)
                 ).toString()
             ),
         },
@@ -84,7 +76,7 @@ export const tokens = async () => ({
             ),
         },
         USDC: {
-            contractAddress: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+            contractAddress: "0xBA5Fe23f8a3a24BEd3236F05F2FcF35fd0BF0B5C",
             abi: JSON.parse(
                 (await checkFileExistenceAndReturnContent(USDC_BSC)).toString()
             ),
@@ -118,7 +110,7 @@ export const tokens = async () => ({
     137: {
         name: "Polygon Mainnet",
         USDT: {
-            contractAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+            contractAddress: "0x42243231FB4a64a5BCFc7F4B7a9aD92576804046",
             abi: JSON.parse(
                 (
                     await checkFileExistenceAndReturnContent(USDT_POLYGON)
@@ -126,7 +118,7 @@ export const tokens = async () => ({
             ),
         },
         USDC: {
-            contractAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+            contractAddress: "0xDD9185DB084f5C4fFf3b4f70E7bA62123b812226",
             abi: JSON.parse(
                 (
                     await checkFileExistenceAndReturnContent(USDC_POLYGON)
@@ -134,7 +126,7 @@ export const tokens = async () => ({
             ),
         },
         BUSD: {
-            contractAddress: "0xdAb529f40E671A1D4bF91361c21bf9f0C9712ab7",
+            contractAddress: "0x9fB83c0635De2E815fd1c21b3a292277540C2e8d",
             abi: JSON.parse(
                 (
                     await checkFileExistenceAndReturnContent(BUSD_POLYGON)

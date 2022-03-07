@@ -3,19 +3,13 @@ import { checkFileExistenceAndReturnContent } from "../utils";
 const USDT_MAIN = "abi/USDT-main" as const;
 const USDC_MAIN = "abi/USDC-main" as const;
 const BUSD_MAIN = "abi/BUSD-main" as const;
-const USDT_ROPSTEN = "abi/USDT-ropsten" as const;
-const USDC_ROPSTEN = "abi/USDC-ropsten" as const;
-const BUSD_ROPSTEN = "abi/BUSD-ropsten" as const;
 const USDT_BSC = "abi/USDT-bsc" as const;
 const USDC_BSC = "abi/USDC-bsc" as const;
 const BUSD_BSC = "abi/BUSD-bsc" as const;
-const USDT_BSCTEST = "abi/USDT-bsctest" as const;
-const BUSD_BSCTEST = "abi/BUSD-bsctest" as const;
 const USDT_POLYGON = "abi/USDT-polygon" as const;
 const USDC_POLYGON = "abi/USDC-polygon" as const;
 const BUSD_POLYGON = "abi/BUSD-polygon" as const;
 const USDT_MUMBAI = "abi/USDT-mumbai" as const;
-const USDC_MUMBAI = "abi/USDC-mumbai" as const;
 
 export const rpcNetworks = {
     1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161", // Ethereum Mainnet
@@ -36,34 +30,15 @@ export const tokens = async () => ({
             ),
         },
         USDC: {
-            contractAddress: "0x0882477e7895bdC5cea7cB1552ed914aB157Fe56",
+            contractAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             abi: JSON.parse(
                 (await checkFileExistenceAndReturnContent(USDC_MAIN)).toString()
             ),
         },
         BUSD: {
-            contractAddress: "0x5864c777697Bf9881220328BF2f16908c9aFCD7e",
+            contractAddress: "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
             abi: JSON.parse(
                 (await checkFileExistenceAndReturnContent(BUSD_MAIN)).toString()
-            ),
-        },
-    },
-    3: {
-        name: "Ropsten",
-        USDT: {
-            contractAddress: "0x6EE856Ae55B6E1A249f04cd3b947141bc146273c",
-            abi: JSON.parse(
-                (
-                    await checkFileExistenceAndReturnContent(USDT_ROPSTEN)
-                ).toString()
-            ),
-        },
-        BUSD: {
-            contractAddress: "0x16c550a97Ad2ae12C0C8CF1CC3f8DB4e0c45238f",
-            abi: JSON.parse(
-                (
-                    await checkFileExistenceAndReturnContent(BUSD_ROPSTEN)
-                ).toString()
             ),
         },
     },
@@ -76,7 +51,7 @@ export const tokens = async () => ({
             ),
         },
         USDC: {
-            contractAddress: "0xBA5Fe23f8a3a24BEd3236F05F2FcF35fd0BF0B5C",
+            contractAddress: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
             abi: JSON.parse(
                 (await checkFileExistenceAndReturnContent(USDC_BSC)).toString()
             ),
@@ -88,29 +63,10 @@ export const tokens = async () => ({
             ),
         },
     },
-    97: {
-        name: "Binance Smart Chain Testnet",
-        USDT: {
-            contractAddress: "0x33abF1498d52E521DcAE88f236DE5EFc720cF969",
-            abi: JSON.parse(
-                (
-                    await checkFileExistenceAndReturnContent(USDT_BSCTEST)
-                ).toString()
-            ),
-        },
-        BUSD: {
-            contractAddress: "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
-            abi: JSON.parse(
-                (
-                    await checkFileExistenceAndReturnContent(BUSD_BSCTEST)
-                ).toString()
-            ),
-        },
-    },
     137: {
         name: "Polygon Mainnet",
         USDT: {
-            contractAddress: "0x42243231FB4a64a5BCFc7F4B7a9aD92576804046",
+            contractAddress: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
             abi: JSON.parse(
                 (
                     await checkFileExistenceAndReturnContent(USDT_POLYGON)
@@ -118,7 +74,7 @@ export const tokens = async () => ({
             ),
         },
         USDC: {
-            contractAddress: "0xDD9185DB084f5C4fFf3b4f70E7bA62123b812226",
+            contractAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
             abi: JSON.parse(
                 (
                     await checkFileExistenceAndReturnContent(USDC_POLYGON)

@@ -33,7 +33,7 @@ router.get("/partner/:organizerName", async (req: Request, res: Response) => {
             HTTPStatus.BAD_REQUEST
         );
         const events = await checkFileExistenceAndReturnContent(
-            req.params.organizerName
+            req.params.organizerName.toLowerCase()
         );
         return res
             .status(HTTPStatus.SUCCESS)

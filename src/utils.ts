@@ -29,7 +29,7 @@ export async function checkFileExistenceAndReturnContent(filename: string) {
     } catch (e) {
         throw new ApplicationError(
             HTTPStatus.NOT_FOUND,
-            "File with current name not found"
+            `File with name "${filename}" not found`
         );
     }
 }

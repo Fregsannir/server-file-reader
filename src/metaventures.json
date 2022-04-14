@@ -1,0 +1,89 @@
+[
+    {
+        "title": "Metaventures 2022",
+        "date": "7-9th of May",
+        "promo": [
+            {
+                "name": "offchain",
+                "sale": 10
+            },
+            {
+                "name": "cointelegraph",
+                "sale": 10
+            },
+            {
+                "name": "bm",
+                "count": 2,
+                "type": ["standard"],
+                "sale": 100
+            },
+            {
+                "name": "kpcrypto",
+                "sale": 10
+            },
+            {
+                "name": "cryptoexecs",
+                "sale": 10
+            },
+            {
+                "name": "coachk",
+                "sale": 20,
+                "count": 50
+            },
+	    {
+		"name": "MAGO",
+		"sale": 10
+	    },
+	    {
+		"name": "BLOCKMANITY",
+		"sale": 10
+	    },
+	    {
+		"name": "COINSPAID",
+		"sale": 10
+	    },
+	    {
+		"name": "COINKOLIK",
+		"sale": 10
+	    },
+	    {
+		"name": "GIVE1",
+		"sale": 100,
+		"count": 1,
+		"type": ["standart"]
+	    }
+        ],
+        "tickets": [
+            {
+                "id": 303,
+                "query": "test",
+                "name": "Some Ticket",
+                "price": 0.001
+            },
+            {
+                "id": 340,
+                "query": "general-admission",
+                "name": "GENERAL ADMISSION",
+                "price": 49
+            },
+            {
+                "id": 342,
+                "query": "standard",
+                "name": "STANDARD",
+                "price": 149
+            },
+            {
+                "id": 343,
+                "query": "business",
+                "name": "BUSINESS",
+                "price": 299
+            },
+            {
+                "id": 344,
+                "query": "vip",
+                "name": "VIP",
+                "price": 649
+            }
+        ]
+    }
+]

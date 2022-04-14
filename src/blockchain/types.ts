@@ -90,4 +90,15 @@ export const tokens = async () => ({
             ),
         },
     },
+    80001: {
+        name: "Polygon Mumbai",
+        USDC: {
+            contractAddress: "0x150f41902619f0B80FA6a741cb485C303443D3Df",
+            abi: JSON.parse(
+                (
+                    await checkFileExistenceAndReturnContent(USDC_POLYGON)
+                ).toString()
+            ),
+        },
+    }
 });

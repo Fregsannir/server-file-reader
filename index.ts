@@ -20,10 +20,7 @@ dotenv.config();
 
 app.use(
     cors({
-        origin: [
-            `${process.env.CORS_HOST}`,
-            `${process.env.SECOND_CORS_HOST}`
-        ],
+        origin: /.+\.flashback\.one$/,
     }),
     express.json()
 );

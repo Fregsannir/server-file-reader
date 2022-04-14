@@ -1,0 +1,37 @@
+[
+    {
+        "title": "Metamorfozi 2022",
+        "promo": [
+            {
+                "name": "metamorfozi_some_of_them",
+                "sale": 100
+            }
+        ],
+        "tickets": [
+            {
+                "id": 303,
+                "query": "test",
+                "name": "Some Ticket",
+                "price": 1
+            },
+            {
+                "id": 394,
+                "query": "standard",
+                "name": "STANDARD",
+                "price": 1000
+            },
+            {
+                "id": 395,
+                "query": "premium",
+                "name": "PREMIUM",
+                "price": 4000
+            },
+            {
+                "id": 396,
+                "query": "vip",
+                "name": "VIP",
+                "price": 10000
+            }
+        ]
+    }
+]
